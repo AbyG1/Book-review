@@ -1,0 +1,27 @@
+{
+  "name": "book-review",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbyG1/Book-review.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbyG1/Book-review/issues"
+  },
+  "homepage": "https://github.com/AbyG1/Book-review#readme",
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "dotenv": "^17.2.2",
+    "graphql": "^16.11.0",
+    "mongoose": "^8.18.0",
+    "nodemon": "^3.1.10"
+  }
+}
