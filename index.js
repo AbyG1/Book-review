@@ -10,8 +10,7 @@ const connetionString = process.env.MONGODB_URI
 const server = new ApolloServer({
 
     typeDefs,
-    resolvers
-  
+    resolvers  
 
 })
 

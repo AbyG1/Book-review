@@ -1,8 +1,40 @@
-export const typeDefs = ` 
+export const typeDefs = `#graphql 
+
+  type Book {
+    id: ID!
+    title: String!
+    author: String!
+    bestseller: Boolean
+  }
 
  
+
   type Query {
-    hello: String
+  
+  getBooks: [Book]
+  
+  }
+
+
+
+
+  input newBookInput {
+    title: String!
+    author: String!
+    bestseller: Boolean
+  }
+
+  input updateBookInput {
+    title: String
+    author: String
+    bestseller: Boolean
+  }
+
+
+
+  type Mutation {
+    addBook(newBook: newBookInput!): Book
+    updateBook(id: ID!, book: updateBookInput! ): Book
   }
 
 `
