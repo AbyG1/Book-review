@@ -13,6 +13,7 @@ export const typeDefs = `#graphql
   
   getBooks: [Book]
   
+  
   }
 
 
@@ -34,7 +35,12 @@ export const typeDefs = `#graphql
 
   type Mutation {
     addBook(newBook: newBookInput!): Book
+    
+    
     updateBook(id: ID!, book: updateBookInput! ): Book
-  }
+
+    deleteBook(id: ID!): Book
+  
+    }
 
 `

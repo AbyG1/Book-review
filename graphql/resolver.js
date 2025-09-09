@@ -28,6 +28,11 @@ export const resolvers =  {
     updateBook: async(parent,args,context) => {
 
         const book = await Book.findById(args.id)
+
+        if (!book) {
+          throw new Error("Book not found");
+        }
+
         if(args.book.title){
          book.title =  args.book.title   
         }
@@ -37,7 +42,6 @@ export const resolvers =  {
         }
 
         if(args.book.bestseller !== undefined){
-            
             book.bestseller = args.book.bestseller
         }
 
@@ -45,10 +49,15 @@ export const resolvers =  {
 
         return await Book.findById(args.id) 
 
+    },
+
+    deleteBook: async(parent, args, context) => {
+        const book = await Book.findByIdAndDelete(args.id)
+        if (!book) {
+          throw new Error("Book not found");
+        }
+        return book
     }
-
-
-
 
 
 
