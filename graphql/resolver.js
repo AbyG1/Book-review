@@ -4,10 +4,31 @@ export const resolvers =  {
 
   Query: {
 
-    getBooks: (_,args,contetxt) => {
+    getBooks: async(_,args,context) => {
+      const books = await Book.find()
+      
+      if(books.length === 0){
+        return{
+          book:[],
+          message: "No books found"
+        }
+      }
 
+      return {
+        book: books,
+        message:"successfully fetched"
+      }
+    },
+
+    
+    getBook: async(_,args,context) => {
+      const book = await Book.findById(args.id) 
+      if(!book){
+        throw new Error("Book not found");
+      }
+      return book
     }
-
+   
   },
 
 

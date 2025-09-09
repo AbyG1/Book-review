@@ -6,17 +6,19 @@ export const typeDefs = `#graphql
     author: String!
     bestseller: Boolean
   }
-
  
-
-  type Query {
-  
-  getBooks: [Book]
-  
+  type BookResponse {
+    book: [Book!]!
+    message: String
   
   }
 
 
+
+  type Query {
+    getBooks: BookResponse!
+    getBook(id: ID!): Book  
+  }
 
 
   input newBookInput {
@@ -35,10 +37,7 @@ export const typeDefs = `#graphql
 
   type Mutation {
     addBook(newBook: newBookInput!): Book
-    
-    
     updateBook(id: ID!, book: updateBookInput! ): Book
-
     deleteBook(id: ID!): Book
   
     }
