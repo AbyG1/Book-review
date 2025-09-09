@@ -3,8 +3,9 @@ export const typeDefs = `#graphql
   type Book {
     id: ID!
     title: String!
-    author: String!
+    author: Author!
     bestseller: Boolean
+
   }
  
   type BookResponse {
@@ -13,32 +14,49 @@ export const typeDefs = `#graphql
   
   }
 
+  type Author {
+    id: ID!
+    name: String!
+    book: [Book]!
+  }
+
+  type AuthorResponse {
+    author: Author!
+    message: String
+  }
 
 
   type Query {
-    getBooks: BookResponse!
-    getBook(id: ID!): Book  
+    Books: BookResponse!
+    Book(id: ID!): Book!  
+    author(id: ID!): AuthorResponse!
   }
 
 
   input newBookInput {
     title: String!
-    author: String!
+    author: ID!
     bestseller: Boolean
   }
 
   input updateBookInput {
     title: String
-    author: String
+    author: ID
     bestseller: Boolean
   }
 
 
+  input authorInput {
+    name: String!
+  }
+
 
   type Mutation {
-    addBook(newBook: newBookInput!): Book
+    addBook(newBook: newBookInput!): Book!
     updateBook(id: ID!, book: updateBookInput! ): Book
     deleteBook(id: ID!): Book
+
+    addAuthor(author: authorInput!): Author
   
     }
 

@@ -1,10 +1,12 @@
+
 import Book from '../models/bookSchema.js'
+import Author from '../models/authorSchema.js'
 
 export const resolvers =  {
 
   Query: {
 
-    getBooks: async(_,args,context) => {
+    Books: async(_,args,context) => {
       const books = await Book.find()
       
       if(books.length === 0){
@@ -21,15 +23,51 @@ export const resolvers =  {
     },
 
     
-    getBook: async(_,args,context) => {
+    Book: async(_,args,context) => {
       const book = await Book.findById(args.id) 
       if(!book){
         throw new Error("Book not found");
       }
       return book
-    }
+    },
    
+    author: async(parent,args,context) => {
+      const author = await Author.findById(args.id)
+      if(!author){
+        throw new Error("Author not found")
+      }
+
+      return {
+        author,
+        messege: "successfully fetched"
+      }
+
+
+    },
+
+  
+
+
+
+
   },
+
+  Book: {
+    author: async(parent,args) => {
+      const author = await Author.findById(parent.author)
+      return author
+    }
+  },
+
+ Author: {
+  book: async(parent,args) => {
+    const book = Book.find({author:parent.id})
+    return book
+  }
+
+ },
+
+
 
 
 
@@ -37,13 +75,19 @@ export const resolvers =  {
 
     addBook: async(parent,args,context) => {
 
+        const bookExists = await Book.exists({title:args.newBook.title})
+        if(bookExists){
+          throw new Error("Book already exist")
+        }
+
         const book = await Book.create({
             title: args.newBook.title,
             author: args.newBook.author,
             bestseller: args.newBook.bestseller
+
         })
 
-        return book
+        return await book.populate("author")
     },
 
     updateBook: async(parent,args,context) => {
@@ -78,8 +122,27 @@ export const resolvers =  {
           throw new Error("Book not found");
         }
         return book
+    },
+
+     addAuthor: async(_,args) => {
+
+       const authorExists = await Author.exists({name:args.author.name})
+        if(authorExists){
+          throw new Error("Author already exist")
+        }
+
+
+      const author = await Author.create({
+        name: args.author.name
+      })
+
+      return author
+
     }
 
+
+
+    
 
 
   }

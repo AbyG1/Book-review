@@ -1,11 +1,18 @@
-import mongoose, { model } from "mongoose"
-const {Schema, modal } = mongoose
+import mongoose from "mongoose"
+const {Schema, model } = mongoose
 
 
 const bookSchema = new Schema( 
     {
-        title: String,
-        author: String,
+        title: {
+            type: String,
+            required: true
+        },
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: "Author"
+        },
+
         bestseller: Boolean,
     },
     {
